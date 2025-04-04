@@ -29,7 +29,8 @@ class _WebViewScreenState extends State<WebViewScreen> {
     super.initState();
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..loadRequest(Uri.parse("https://thinkdock.co.kr")); // ✅ 여기 수정
+      ..clearCache()
+      ..loadRequest(Uri.parse("https://thinkdock.co.kr"));
   }
 
   @override
