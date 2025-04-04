@@ -8,22 +8,33 @@ version: 1.0.0+1
 environment:
   sdk: ^3.5.4
 
-
 dependencies:
   flutter:
     sdk: flutter
-
-
   cupertino_icons: ^1.0.8
+  webview_flutter: ^4.4.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
-  webview_flutter: ^4.4.1
+  flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.3.5
 
 flutter:
-
-
   uses-material-design: true
 
+  assets:
+    - assets/icon/ship.png
+    - assets/splash/logo.png
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: assets/icon/ship.png
+
+flutter_native_splash:
+  image: assets/splash/logo.png
+  color: "#ffffff"
+  android: true
+  ios: true
