@@ -1,11 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.think_dock_mobile">
+    package="com.danny.think_dock_mobile">
 
     <!-- ✅ 인터넷 권한 추가 -->
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:label="think_dock_mobile"
+        android:label="ThinkDock"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 
