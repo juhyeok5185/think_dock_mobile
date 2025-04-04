@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.think_dock_mobile"> <!-- ← 패키지명에 맞게 필요시 수정 -->
+    package="com.example.think_dock_mobile">
 
     <!-- ✅ 인터넷 권한 추가 -->
     <uses-permission android:name="android.permission.INTERNET"/>
