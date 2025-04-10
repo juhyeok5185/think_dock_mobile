@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:firebase_core/firebase_core.dart';  // Firebase 초기화용 패키지
+import 'package:firebase_messaging/firebase_messaging.dart';  // Firebase Messaging 패키지
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();  // Flutter 초기화
+  await Firebase.initializeApp();  // Firebase 초기화
+  await _getDeviceToken();  // 디바이스 토큰 가져오기
   runApp(const MyApp());
 }
 
+
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
@@ -17,6 +25,7 @@ class MyApp extends StatelessWidget {
 
 class WebViewScreen extends StatefulWidget {
   const WebViewScreen({super.key});
+
   @override
   State<WebViewScreen> createState() => _WebViewScreenState();
 }
@@ -78,5 +87,15 @@ class _WebViewScreenState extends State<WebViewScreen> {
         ),
       ),
     );
+  }
+}
+
+Future<void> _getDeviceToken() async {
+  try {
+    // 디바이스 토큰 가져오기
+    String? token = await FirebaseMessaging.instance.getToken();
+    print("Firebase Device Token: $token");  // 디버그 출력
+  } catch (e) {
+    print("Error getting device token: $e");
   }
 }

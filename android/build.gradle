@@ -1,7 +1,17 @@
+buildscript {
+    repositories {
+        google()  // Firebase와 관련된 Google 라이브러리 가져오기
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.google.gms:google-services:4.4.2'  // Firebase의 Google 서비스 플러그인
+    }
+}
+
 allprojects {
     repositories {
-        google()
-        mavenCentral()
+        google()  // Firebase를 포함한 Google 저장소
+        mavenCentral()  // Maven 중앙 저장소
     }
 }
 
