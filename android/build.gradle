@@ -1,9 +1,12 @@
 buildscript {
+    ext.kotlin_version = '1.8.0' // Kotlin 버전을 1.8.0으로 다운그레이드
+
     repositories {
         google()  // Firebase와 관련된 Google 라이브러리 가져오기
         mavenCentral()
     }
     dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.google.gms:google-services:4.4.2'  // Firebase의 Google 서비스 플러그인
     }
 }
