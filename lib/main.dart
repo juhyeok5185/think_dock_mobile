@@ -6,7 +6,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';  // Firebase Messag
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();  // Flutter 초기화
   await Firebase.initializeApp();  // Firebase 초기화
-  await _getDeviceToken();  // 디바이스 토큰 가져오기
   runApp(const MyApp());
 }
 
@@ -90,12 +89,8 @@ class _WebViewScreenState extends State<WebViewScreen> {
   }
 }
 
-Future<void> _getDeviceToken() async {
-  try {
-    // 디바이스 토큰 가져오기
-    String? token = await FirebaseMessaging.instance.getToken();
-    print("Firebase Device Token: $token");  // 디버그 출력
-  } catch (e) {
-    print("Error getting device token: $e");
-  }
+Future<String?> getMyDeviceToken() async {
+  final token = await FirebaseMessaging.instance.getToken();
+  debugPrint("내 디바이스 토큰: $token");
+  return token;
 }
