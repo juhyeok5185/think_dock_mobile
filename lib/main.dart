@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';  // Firebase 초기화용 패키지
 import 'package:firebase_messaging/firebase_messaging.dart';  // Firebase Messaging 패키지
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();  // Flutter 초기화
-  await Firebase.initializeApp();  // Firebase 초기화
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  await MobileAds.instance.initialize();
   runApp(const MyApp());
 }
 
@@ -31,6 +33,8 @@ class WebViewScreen extends StatefulWidget {
 
 class _WebViewScreenState extends State<WebViewScreen> {
   late final WebViewController _controller;
+  InterstitialAd? _interstitialAd;
+
   bool _isLoading = true;
 
   @override
@@ -38,6 +42,15 @@ class _WebViewScreenState extends State<WebViewScreen> {
     super.initState();
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..addJavaScriptChannel(
+        'AdChannel',
+        onMessageReceived: (JavaScriptMessage message) {
+          debugPrint("[📩 JS → Flutter] 수신된 메시지: ${message.message}");
+          if (message.message == "showInterstitial") {
+            showInterstitialAd();
+          }
+        },
+      )
       ..setNavigationDelegate(
         NavigationDelegate(
           onPageStarted: (String url) {
@@ -53,7 +66,45 @@ class _WebViewScreenState extends State<WebViewScreen> {
         ),
       )
       ..loadRequest(Uri.parse("https://thinkdock.co.kr"));
+
+
   }
+
+  void showInterstitialAd() {
+    if (_interstitialAd != null) {
+      _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+        onAdDismissedFullScreenContent: (ad) {
+          ad.dispose();
+          loadInterstitialAd(); // 광고 재로딩
+        },
+        onAdFailedToShowFullScreenContent: (ad, error) {
+          ad.dispose();
+          loadInterstitialAd();
+        },
+      );
+      _interstitialAd!.show();
+      _interstitialAd = null;
+    } else {
+      debugPrint("광고가 아직 로딩되지 않았습니다");
+    }
+  }
+
+  void loadInterstitialAd() {
+    InterstitialAd.load(
+      adUnitId: 'ca-app-pub-6411993651260827/8362429499',
+      request: const AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (InterstitialAd ad) {
+          _interstitialAd = ad;
+          debugPrint("전면 광고 로딩 완료");
+        },
+        onAdFailedToLoad: (LoadAdError error) {
+          debugPrint('전면 광고 로딩 실패: $error');
+        },
+      ),
+    );
+  }
+
 
   // 뒤로가기 버튼 처리
   Future<bool> _onWillPop() async {
