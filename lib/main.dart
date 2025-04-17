@@ -11,11 +11,8 @@ void main() async {
   runApp(const MyApp());
 }
 
-
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
@@ -26,7 +23,6 @@ class MyApp extends StatelessWidget {
 
 class WebViewScreen extends StatefulWidget {
   const WebViewScreen({super.key});
-
   @override
   State<WebViewScreen> createState() => _WebViewScreenState();
 }
@@ -34,9 +30,7 @@ class WebViewScreen extends StatefulWidget {
 class _WebViewScreenState extends State<WebViewScreen> {
   late final WebViewController _controller;
   InterstitialAd? _interstitialAd;
-
   bool _isLoading = true;
-
   @override
   void initState() {
     super.initState();
@@ -65,7 +59,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
           },
         ),
       )
-      ..loadRequest(Uri.parse("https://thinkdock.co.kr"));
+      ..loadRequest(Uri.parse("https://thinkdock.co.kr/login"));
 
 
   }
